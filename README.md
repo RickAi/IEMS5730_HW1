@@ -16,6 +16,11 @@ hadoop dfs -copyFromLocal *.dat hw1/input
 
 # execute job
 hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_small.dat hw1/input/N_small.dat hw1/tmp/small hw1/output/small
+
+# query result
+# my student id is: 1155114481, so the line should end with 81
+hadoop dfs -cat hw1/output/small/part-r-00000 | awk '{if(($1-81)%100==0) print}' > small.txt
+cat small.txt
 ```
 
 Results:
@@ -34,19 +39,59 @@ hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_median.dat hw1/input/N_median.
 
 # large dataset
 hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large
+
+# my student id is: 1155114481, so the line should end with 481
+hadoop dfs -cat hw1/output/median/part-r-00000 | awk '{if(($1-481)%1000==0) print}' > median.txt
+cat median.txt
+
+hadoop dfs -cat hw1/output/large/part-r-00000 | awk '{if(($1-481)%1000==0) print}' > large.txt
+cat large.txt
 ```
 
 Results:
 
+```
+
+```
+
 ## c. Re-run your program in b) multiple times using different number of mappers and reducers for your MapReduce job each time. You need to examine and report the run-time performance statistics of your program for at least 4 different combinations of number of mappers and reducers.
+
+Here I use `large dataset` for testing purpose.
+
+The immdiate data is around 6995 MB, the default block size is 128MB, so the default mapper count is 6995/128, which is  55 mapper.
+
+Commands:
+
+```bash
+# 55 mapper, 1 reducer
+hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_55m_1r 1
+
+# 55 mapper, 10 reducer
+hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_55m_10r 10
+
+# 55 mapeer, 20 reducer
+hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_55m_20r 20
+
+# change mapred.min.split.size from 128MB to 64MB to double the mapper
+# 110 mapper, 20 reducer
+hadoop jar ybai-1.0-SNAPSHOT.jar Main -D mapreduce.input.fileinputformat.split.maxsize=67108864 hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_110m_20r 20
+
+# 110 mapper, 40 reducer
+hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_110m_40r 40
+
+# change mapred.min.split.size from 128MB to 32MB to double the mapper
+# 220 mapper, 40 reducer
+hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_220m_40r 40
+```
 
 |Mapper Count|Reducer Count|Mapper Time Cost|Reducer Time Cost|Total Time Cost|
 |---|---|---|---|---|
-|1|1||||
-|10|1||||
-|1|10||||
-|10|10||||
-|20|20||||
+|55|1|15min|22min|37min|
+|55|10|15min|7min|22min|
+|55|20|15min|4min|19min|
+|110|20||||
+|110|40||||
+|220|40||||
 
 |Maximum mapper time|Minimum mapper time|Averager mapper time|Maximum reducer time|Minimum reducer time|Average reducer time|Total job time|
 |---|---|---|---|---|---|---|

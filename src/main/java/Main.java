@@ -22,7 +22,7 @@ public class Main {
             String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
 
             if (otherArgs.length < 5) {
-                System.out.println("hadoop jar xxx.jar Main [M input] [N input] [tmp] [output] [reducer count]");
+                System.out.println("hadoop jar xxx.jar Main [M input] [N input] [tmp] [output] [reducer count] [split size mb]");
                 System.exit(1);
             }
 
@@ -60,6 +60,10 @@ public class Main {
             // set up matrix sum job
             Job matrixSumJob = Job.getInstance();
             matrixSumJob.setJarByClass(Main.class);
+
+            if (otherArgs.length >= 6) {
+                FileInputFormat.setMaxInputSplitSize(matrixSumJob, 1024 * 1024 * Long.valueOf(otherArgs[5]));
+            }
 
             // set up config
             matrixSumJob.setMapperClass(Mappers.MatrixMapper.class);
