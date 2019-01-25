@@ -74,14 +74,14 @@ hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.da
 
 # change mapred.min.split.size from 128MB to 64MB to double the mapper
 # 110 mapper, 20 reducer
-hadoop jar ybai-1.0-SNAPSHOT.jar Main -D mapreduce.input.fileinputformat.split.maxsize=67108864 hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_110m_20r 20
+hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_110m_20r 20 64
 
 # 110 mapper, 40 reducer
-hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_110m_40r 40
+hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_110m_40r 40 64
 
 # change mapred.min.split.size from 128MB to 32MB to double the mapper
 # 220 mapper, 40 reducer
-hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_220m_40r 40
+hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_220m_40r 40 32
 ```
 
 |Mapper Count|Reducer Count|Mapper Time Cost|Reducer Time Cost|Total Time Cost|
@@ -89,13 +89,13 @@ hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.da
 |55|1|15min|22min|37min|
 |55|10|15min|7min|22min|
 |55|20|15min|4min|19min|
-|110|20||||
-|110|40||||
-|220|40||||
+|110|20|16min|4.5min|20.5min|
+|110|40|16min|5.5min|21.5min|
+|220|40|18min|6.5min|24.5min|
 
-|Maximum mapper time|Minimum mapper time|Averager mapper time|Maximum reducer time|Minimum reducer time|Average reducer time|Total job time|
-|---|---|---|---|---|---|---|
-||||||||
+|Max mapper time|Min mapper time|Ave mapper time|Max reducer time|Min reducer time|Ave reducer time|Max total job time|Min total job time|Avg total job time|
+|---|---|---|---|---|---|---|---|---|---|
+|18min|15min|15.8min|22min|4min|8.25|37min|19min|24.08min|
 
 ## Notes
 

@@ -61,6 +61,7 @@ public class Main {
             Job matrixSumJob = Job.getInstance();
             matrixSumJob.setJarByClass(Main.class);
 
+            // set the max split size to control mapper count
             if (otherArgs.length >= 6) {
                 FileInputFormat.setMaxInputSplitSize(matrixSumJob, 1024 * 1024 * Long.valueOf(otherArgs[5]));
             }
