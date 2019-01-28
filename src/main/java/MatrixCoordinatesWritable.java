@@ -52,4 +52,9 @@ public class MatrixCoordinatesWritable implements WritableComparable<MatrixCoord
         sb.append(row.get()).append("\t").append(column.get());
         return sb.toString();
     }
+
+    @Override
+    public int hashCode() {
+        return this.row.hashCode() * 13 + (this.column == null ? 0 : this.column.hashCode());
+    }
 }
