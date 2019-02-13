@@ -54,8 +54,6 @@ The results for median and large datasets can be found in the **result/median.tx
 
 Here I use **large dataset** for testing purpose.
 
-The immdiate data is around 6995 MB, the default block size is 128MB, so the default mapper count is 6995/128, which is  55 mapper.
-
 Commands:
 
 ```bash
@@ -91,9 +89,14 @@ Results:
 |110|40|16min|5.5min|21.5min|
 |220|40|18min|6.5min|24.5min|
 
-|Max mapper time|Min mapper time|Ave mapper time|Max reducer time|Min reducer time|Ave reducer time|Max total job time|Min total job time|Avg total job time|
+|Max mapper time|Min mapper time|Avg mapper time|Max reducer time|Min reducer time|Avg reducer time|Max total job time|Min total job time|Avg total job time|
 |---|---|---|---|---|---|---|---|---|
 |18min|15min|15.8min|22min|4min|8.25|37min|19min|24.08min|
+
+Explanations:
+
+1. **The mapper count 55 is the optimal count**. When I try to increase the mapper count to 110 and 220, the mapper time cost will also increase. The immdiate data from first reducer for large dataset is around 6995 MB, the default block size is 128MB, so the default mapper count for the second mapper is 6995/128, which is  55 mapper. The total CPU and memory power in the cluster is fixed, even when I try to increase mapper count, the parallelism will not increase too much. However, however, as the mapper count increase, the overhead from HDFS read will increase since a single mapper map need read muliply HDFS data block. The HDFS read and CPU switch overhead is higher than the increase of mapper parallelism, which is the main reason for the increase of mapper time cost.
+2. **The reducer count 20 is the optimal count**. The reducer time cost will decrease when the reducer count increase from 1 to 20, however, the reducer time cost will increase when the reducer count increase from 20 to 40. The main reason for the decrease time cost from 1 to 20 reducer is the increase of compute parallelism, more reducer can utilize more CPU power in the cluster. The main reason for the increase time cost from 20 to 40 reducer is similar to the increase of mapper count.
 
 ## Notes
 
