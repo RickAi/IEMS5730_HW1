@@ -25,9 +25,7 @@ cat small.txt
 
 Results:
 
-```
-
-```
+The results can be found in the **result/small.txt**
 
 ## b. Perform the matrix multiplication in the median dataset[2] and large dataset[3].
 
@@ -50,13 +48,11 @@ cat large.txt
 
 Results:
 
-```
-
-```
+The results for median and large datasets can be found in the **result/median.txt** and **result/large.txt**
 
 ## c. Re-run your program in b) multiple times using different number of mappers and reducers for your MapReduce job each time. You need to examine and report the run-time performance statistics of your program for at least 4 different combinations of number of mappers and reducers.
 
-Here I use `large dataset` for testing purpose.
+Here I use **large dataset** for testing purpose.
 
 The immdiate data is around 6995 MB, the default block size is 128MB, so the default mapper count is 6995/128, which is  55 mapper.
 
@@ -83,6 +79,8 @@ hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.da
 # 220 mapper, 40 reducer
 hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.dat hw1/tmp/large hw1/output/large_220m_40r 40 32
 ```
+
+Results:
 
 |Mapper Count|Reducer Count|Mapper Time Cost|Reducer Time Cost|Total Time Cost|
 |---|---|---|---|---|
