@@ -94,7 +94,7 @@ hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.da
 |220|40|18min|6.5min|24.5min|
 
 |Max mapper time|Min mapper time|Ave mapper time|Max reducer time|Min reducer time|Ave reducer time|Max total job time|Min total job time|Avg total job time|
-|---|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|
 |18min|15min|15.8min|22min|4min|8.25|37min|19min|24.08min|
 
 ## Notes
@@ -106,6 +106,3 @@ hadoop jar ybai-1.0-SNAPSHOT.jar Main hw1/input/M_large.dat hw1/input/N_large.da
 |Small|8.45|
 |Median|874.59|
 |Large|6995.32|
-
-
-
